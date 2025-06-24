@@ -4507,3 +4507,39 @@ func (g *GoCloak) GetUsersManagementPermissions(ctx context.Context, accessToken
 
 	return &result, nil
 }
+
+// -------------------------
+// UserProfileAttributes API
+// -------------------------
+
+func (g *GoCloak) GetUserProfileAttributes(ctx context.Context, accessToken, realm string) (*UPConfig, error) {
+	const errMessage = "could not get user profile attributes"
+
+	var result UPConfig
+
+	resp, err := g.GetRequestWithBearerAuth(ctx, accessToken).
+		SetResult(&result).
+		Get(g.getAdminRealmURL(realm, "users", "profile"))
+	if err := checkForError(resp, err, errMessage); err != nil {
+		return nil, err
+	}
+
+	return &result, nil
+}
+
+func (g *GoCloak) UpdateUserProfileAttributes(ctx context.Context, accessToken, realm string, userProfile UPConfig) (*UPConfig, error) {
+	const errMessage = "could not update user profile"
+
+	var result UPConfig
+
+	resp, err := g.GetRequestWithBearerAuth(ctx, accessToken).
+		SetResult(&result).
+		SetBody(userProfile).
+		Put(g.getAdminRealmURL(realm, "users", "profile"))
+
+	if err := checkForError(resp, err, errMessage); err != nil {
+		return nil, err
+	}
+
+	return &result, nil
+}
