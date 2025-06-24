@@ -1446,6 +1446,19 @@ type GetClientUserSessionsParams struct {
 	Max   *int `json:"max,string,omitempty"`
 }
 
+// UPAttribute represents a user profile attribute
+// https://www.keycloak.org/docs-api/latest/rest-api/index.html#UPAttribute
+type UPAttribute struct {
+	Name        *string `json:"name,omitempty"`
+	DisplayName *string `json:"displayName,omitempty"`
+}
+
+// UPConfig represents a user profile configuration
+// https://www.keycloak.org/docs-api/latest/rest-api/index.html#UPConfig
+type UPConfig struct {
+	Attributes *[]UPAttribute `json:"attributes,omitempty"`
+}
+
 // prettyStringStruct returns struct formatted into pretty string
 func prettyStringStruct(t interface{}) string {
 	json, err := json.MarshalIndent(t, "", "\t")
