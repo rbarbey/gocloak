@@ -1446,17 +1446,46 @@ type GetClientUserSessionsParams struct {
 	Max   *int `json:"max,string,omitempty"`
 }
 
+type UPAttributeRequired struct {
+	Roles  *[]string `json:"roles,omitempty"`
+	Scopes *[]string `json:"scopes,omitempty"`
+}
+
+type UPAttributePermissions struct {
+	View *[]string `json:"view,omitempty"`
+	Edit *[]string `json:"edit,omitempty"`
+}
+
+type UPAttributeSelector struct {
+	Scopes *[]string `json:"scopes,omitempty"`
+}
+
+type UPGroup struct {
+	Name               *string                 `json:"name,omitempty"`
+	DisplayHeader      *string                 `json:"displayHeader,omitempty"`
+	DisplayDescription *string                 `json:"displayDescription,omitempty"`
+	Annotations        *map[string]interface{} `json:"annotations,omitempty"`
+}
+
 // UPAttribute represents a user profile attribute
 // https://www.keycloak.org/docs-api/latest/rest-api/index.html#UPAttribute
 type UPAttribute struct {
-	Name        *string `json:"name,omitempty"`
-	DisplayName *string `json:"displayName,omitempty"`
+	Name        *string                 `json:"name,omitempty"`
+	DisplayName *string                 `json:"displayName,omitempty"`
+	Validations *map[string]interface{} `json:"validations,omitempty"`
+	Annotations *map[string]interface{} `json:"annotations,omitempty"`
+	Required    *UPAttributeRequired    `json:"required,omitempty"`
+	Permissions *UPAttributePermissions `json:"permissions,omitempty"`
+	Selector    *UPAttributeSelector    `json:"selector,omitempty"`
+	Group       *string                 `json:"group,omitempty"`
+	Multivalued *bool                   `json:"multivalued,omitempty"`
 }
 
 // UPConfig represents a user profile configuration
 // https://www.keycloak.org/docs-api/latest/rest-api/index.html#UPConfig
 type UPConfig struct {
 	Attributes *[]UPAttribute `json:"attributes,omitempty"`
+	Groups     *[]UPGroup     `json:"groups,omitempty"`
 }
 
 // prettyStringStruct returns struct formatted into pretty string
